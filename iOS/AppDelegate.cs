@@ -14,6 +14,10 @@ namespace FindingRito.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 
+            Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init();
+
+            SQLitePCL.Batteries.Init();
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
