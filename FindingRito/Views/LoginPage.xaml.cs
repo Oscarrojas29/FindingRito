@@ -38,9 +38,8 @@ namespace FindingRito.Views
                 Password = passwordEntry.Text
             };
 
-            var isValid = AreCredentialsCorrect(user);
             var member = await m_AzureDataService.GetMemberByUserNameAndPassword(user.UserName, user.Password);
-            if (isValid && member.Any())
+            if (member.Any())
             {
                 App.IsUserLoggedIn = true;
                 Navigation.InsertPageBefore(new MainPage(), this);
@@ -51,11 +50,6 @@ namespace FindingRito.Views
                 messageLabel.Text = "Login failed";
                 passwordEntry.Text = string.Empty;
             }
-        }
-
-        bool AreCredentialsCorrect(User user)
-        {
-            return user.UserName == Constants.Username && user.Password == Constants.Password;
         }
     }
 }

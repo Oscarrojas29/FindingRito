@@ -16,7 +16,7 @@ namespace FindingRito.Services
         public async Task Initialize()
         {
             MobileService = new MobileServiceClient("https://findingrito.azurewebsites.net");
-            const string path = "localstore.db";
+            const string path = "Member.db";
 
             var store = new MobileServiceSQLiteStore(path);
             store.DefineTable<Member>();
@@ -44,7 +44,7 @@ namespace FindingRito.Services
                 UserName = userName,
                 Password = password,
                 Email = email,
-                CreatedUtcTime = email
+                CreatedUtcTime = DateTime.UtcNow.ToString()
             };
 
             await memberTable.InsertAsync(member);
@@ -53,7 +53,7 @@ namespace FindingRito.Services
 
         public async Task SyncMember()
         {
-            await memberTable.PullAsync("members", memberTable.CreateQuery());
+            await memberTable.PullAsync("Member", memberTable.CreateQuery());
             await MobileService.SyncContext.PushAsync();
         }
     }
